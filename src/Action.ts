@@ -8,20 +8,7 @@ export class Action {
   async perform() {
     let pullRequests = await this.api.listPullRequests()
     let filtered = pullRequests.filter((pr) => pr.user?.login == this.userName)
-
-    if (filtered.length > 1){
-      let newest = filtered[0].number
-      filtered.splice(0, 1)
-      for (let i = 0; i < filtered.length; i++){
-        try {
-          this.api.createComment(filtered[i].number, `Closing PR as it is superceeded by #${newest}`)
-          this.api.closePullRequest(filtered[i].number)
-          this.api.deletePullRequestBranch(filtered[i])
-        } catch (e) {
-          core.warning(`An error occurred closing PR # ${filtered[i].number}, moving on to the next PR.`)
-        }
-      }
-    }
+    // do some stuff here
   }
 }
 
